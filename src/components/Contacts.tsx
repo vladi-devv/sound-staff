@@ -241,7 +241,7 @@ const Contacts = () => {
 
                 <Button
                   type='submit'
-                  className='hover:bg-primary-hover glow hover:glow-strong w-full bg-primary text-primary-foreground transition-all duration-300'
+                  className='hover:bg-primary-hover glow hover:glow-strong w-full bg-primary py-6 text-base text-primary-foreground transition-all duration-300'
                 >
                   Замовити консультацію
                 </Button>

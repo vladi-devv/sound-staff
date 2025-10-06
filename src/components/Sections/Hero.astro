@@ -65,7 +65,7 @@ import videoAv1 from '@/assets/video/sound_staff_1_av1_crf60.webm';
       <Button
         id='hero-cta-button'
         size='lg'
-        className='btn-hero px-8 py-4 text-lg font-semibold'
+        className='btn-hero px-8 py-6 text-lg font-semibold'
       >
         Замовити консультацію
         <ArrowRight className='ml-2 h-5 w-5' client:visible />
@@ -87,7 +87,7 @@ import videoAv1 from '@/assets/video/sound_staff_1_av1_crf60.webm';
 
 <script>
   document.getElementById('hero-cta-button')?.addEventListener('click', () => {
-    const element = document.querySelector('#contact');
+    const element = document.querySelector('#contacts');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
