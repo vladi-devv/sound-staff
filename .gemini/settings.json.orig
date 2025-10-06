@@ -1,0 +1,30 @@
+{
+  "contextFileName": [".gemini/COMBINED_CONTEXT.md", "GEMINI.md"],
+  "fileFiltering": {
+    "respectGitIgnore": true,
+    "enableRecursiveFileSearch": true,
+    "excludePatterns": [
+      "**/node_modules/**",
+      "dist/**",
+      "build/**",
+      "coverage/**",
+      ".next/**",
+      "**/.git/**",
+      "**/.venv/**",
+      "**/venv/**",
+      "**/__pycache__/**",
+      "**/*.log",
+      "**/*.tmp",
+      "**/*.temp",
+      "**/*.bak",
+      "**/*.old",
+      "**/.DS_Store",
+      "**/.vscode/**",
+      "**/.idea/**"
+    ]
+  },
+  "includeDirectories": [".gemini/", "docs/", "dialog", "."],
+  "loadMemoryFromIncludeDirectories": true,
+  "autoAccept": false,
+  "maxSessionTurns": -1
+}

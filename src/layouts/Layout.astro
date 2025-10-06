@@ -1,0 +1,110 @@
+---
+import '@/styles/global.css';
+import { Font } from 'astro:assets';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import ScrollToTop from '@/components/ScrollToTop';
+import ogImage from '@/assets/images/ogg-image.jpg';
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+interface Props {
+  title: string;
+  class?: string;
+  id?: string;
+  [key: string]: any;
+}
+
+const {
+  title = 'Sound & Staff - Професійне звукове та світлове обладнання',
+  description = 'Оренда та технічний супровід заходів. Професійний звук, світло та DJ-послуги для вашої події.',
+  class: bodyClass = '',
+  id = 'home',
+  ...rest
+} = Astro.props;
+
+const siteName = import.meta.env.SITE_NAME || 'Sound & Staff';
+const canonicalURL = Astro.url.href;
+const logoURL = new URL('/favicon.svg', Astro.url).href;
+---
+
+<!doctype html>
+<html lang='uk' class='dark h-full scroll-smooth'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width' />
+
+    <title>{title}</title>
+    <meta name='description' content={description} />
+
+    <!-- Favicons -->
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <!-- <link rel='apple-touch-icon' href='/apple-touch-icon.png' /> -->
+
+    <!-- Canonical URL -->
+    <link rel='canonical' href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content={canonicalURL} />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:image' content={ogImage.src} />
+    <meta property='og:site_name' content={siteName} />
+
+    <!-- Twitter -->
+    <meta property='twitter:card' content='summary_large_image' />
+    <meta property='twitter:url' content={canonicalURL} />
+    <meta property='twitter:title' content={title} />
+    <meta property='twitter:description' content={description} />
+    <meta property='twitter:image' content={ogImage.src} />
+
+    <meta name='theme-color' content='#0d1117' />
+
+    <Font cssVariable='--font-inter' preload />
+
+    <!-- Schema.org markup for Google -->
+    <script
+      type='application/ld+json'
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'EventService',
+        name: 'Sound & Staff',
+        description:
+          'Оренда та технічний супровід заходів. Професійний звук, світло та DJ-послуги.',
+        provider: {
+          '@type': 'Organization',
+          name: 'Sound & Staff',
+          url: canonicalURL,
+          logo: logoURL,
+        },
+        areaServed: {
+          '@type': 'Country',
+          name: 'Ukraine',
+        },
+        serviceType: [
+          'Sound equipment rental',
+          'Lighting equipment rental',
+          'DJ services',
+          'Event technical support',
+        ],
+      })}
+    />
+  </head>
+
+  <body class=`h-full ${bodyClass}` id={id} {...rest}>
+    <div
+      id='app'
+      class='flex min-h-screen flex-col scroll-smooth bg-background text-foreground'
+    >
+      <Header client:load />
+
+      <main id='main' class='h-full flex-grow' role='main'>
+        <slot />
+      </main>
+
+      <Footer client:load />
+      <ScrollToTop client:load />
+    </div>
+  </body>
+</html>

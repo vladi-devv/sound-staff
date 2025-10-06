@@ -1,0 +1,62 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface ButtonProps extends HTMLAttributes<'button'> {
+  type?: 'button' | 'submit' | 'reset';
+  href?: never;
+}
+
+interface LinkProps extends HTMLAttributes<'a'> {
+  href: string;
+  type?: never;
+}
+
+interface CommonProps {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'md';
+  ariaLabel?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+type Props = (ButtonProps | LinkProps) & CommonProps;
+
+const {
+  type = 'button',
+  variant = 'primary',
+  size = 'md',
+  ariaLabel,
+  class: className = '',
+  href,
+  ...rest
+} = Astro.props as Props;
+
+const base =
+  'inline-flex self-start leading-snug font-bold items-center justify-center font-medium rounded transition-colors focus:outline-none';
+const variants = {
+  primary: 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-glow',
+  secondary:
+    'bg-transparent border border-slate-300 text-white hover:bg-slate-800',
+  outline:
+    'border border-indigo-500 text-white bg-transparent hover:bg-indigo-500',
+};
+const sizes = {
+  md: 'px-8 py-3 text-base',
+};
+
+const classes = [base, variants[variant], sizes[size], className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{
+  href ? (
+    <a href={href} class={classes} aria-label={ariaLabel} {...rest}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} aria-label={ariaLabel} {...rest}>
+      <slot />
+    </button>
+  )
+}

@@ -1,0 +1,50 @@
+---
+interface Props {
+  class?: string;
+  ariaLabel?: string;
+  active?: string;
+  inactive?: string;
+  navClass?: string;
+}
+
+const {
+  inactive = 'text-white hover:underline',
+  active = 'text-white hover:underline',
+  class: className = '',
+  navClass = '',
+  ariaLabel = 'Main Navigation',
+} = Astro.props as Props;
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const links = [
+  { href: `#services`, label: 'Послуги' },
+  { href: `#team`, label: 'Технічний персонал' },
+  { href: `#events`, label: 'Заходи' },
+  { href: `#contacts`, label: 'Контакти' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class={`${className}`}>
+  <ul
+    class=`flex flex-col ~sm/2xl:~gap-5/14 sm:flex-row sm:items-center ${navClass}`
+    aria-label={ariaLabel}
+  >
+    {
+      links.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class={`tracking-002 text-lg font-medium underline-offset-4 transition-colors ${
+              currentPath === link.href ? active : inactive
+            }`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

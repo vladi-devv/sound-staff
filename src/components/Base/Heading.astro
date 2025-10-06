@@ -1,0 +1,44 @@
+---
+interface Props {
+  tag?: string;
+  class?: string;
+  size?: keyof SizeClasses;
+  color?: 'white' | 'black';
+}
+
+interface SizeClasses {
+  lg: string;
+  xl: string;
+  '1.5xl': string;
+  '2xl': string;
+}
+
+const {
+  tag = 'h1',
+  class: className = '',
+  size = 'xl',
+  color = 'white',
+} = Astro.props as Props;
+const Tag = tag as keyof HTMLElementTagNameMap;
+
+const sizeClasses: SizeClasses = {
+  lg: 'text-lg',
+  xl: '~text-1.5xl/4.5xl',
+  '1.5xl': 'text-3.5xl',
+  '2xl': '~text-3.5xl/5.5xl',
+};
+
+const colorClasses = {
+  white: 'text-slate-100',
+  black: 'text-slate-900',
+};
+
+const textSizeClass = sizeClasses[size];
+const textColorClass = colorClasses[color];
+---
+
+<Tag
+  class={`font-display font-bold ${textSizeClass} ${textColorClass} ${className}`}
+>
+  <slot />
+</Tag>

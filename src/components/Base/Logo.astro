@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@/assets/images/logo.svg';
+
+interface Props {
+  class?: string;
+}
+
+const basePath = import.meta.env.BASE.replace(/\/$/, '');
+const siteName = import.meta.env.SITE_NAME || 'Sound & Staff';
+
+const { class: className = '' } = Astro.props as Props;
+---
+
+<a href={`${basePath}/`}>
+  <Image src={logo} alt={`${siteName}`} class={`${className}`} />
+</a>
