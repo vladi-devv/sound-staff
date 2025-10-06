@@ -20,8 +20,10 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 /** @type {import('astro').AstroUserConfig} */
 const config = {
-  site: SITE || undefined,
-  base: BASE ? `/${BASE.replace(/^\/|\/$/g, '')}/` : '/',
+  // site: SITE || undefined,
+  // base: BASE ? `/${BASE.replace(/^\/|\/$/g, '')}/` : '/',
+  site: 'https://vladi-devv.github.io',
+  base: 'sound-staff',
   output: 'static',
   build: { assets: 'assets' },
   integrations: [tailwind(), react()],
