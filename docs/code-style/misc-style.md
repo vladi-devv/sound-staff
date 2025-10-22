@@ -6,6 +6,7 @@
   - **Пример:** `nova-poshta-logo.svg`, `form-preloader.gif`, `roboto-regular.woff2`.
 
 ## 8. Переменные окружения (Environment Variables)
+
 Для хранения чувствительных данных (API-ключи) и конфигураций, специфичных для окружения (dev/staging/prod), следует использовать переменные окружения.
 
 - **Именование:** `UPPER_CASE_SNAKE_CASE` с префиксом плагина.

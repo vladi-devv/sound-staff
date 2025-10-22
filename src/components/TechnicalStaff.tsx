@@ -1,8 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import staffCoordinatorImage from '@/assets/images/team/staff-coordinator.jpg';
 import staffLightImage from '@/assets/images/team/staff-light.jpg';
 import staffSoundImage from '@/assets/images/team/staff-sound.jpg';
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
 
 const staff = [
   {
@@ -43,45 +51,18 @@ const StaffCard = ({
 );
 
 const TechnicalStaff = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<CarouselApi>();
 
-  const nextSlide = () => {
-    setCurrentSlide(prev => (prev + 1) % staff.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide(prev => (prev - 1 + staff.length) % staff.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null); // Сбрасываем конечную точку при новом касании
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const minSwipeDistance = 50; // Минимальная дистанция для свайпа
-
-    if (distance > minSwipeDistance) {
-      // Свайп влево
-      nextSlide();
-    } else if (distance < -minSwipeDistance) {
-      // Свайп вправо
-      prevSlide();
+  useEffect(() => {
+    if (!api) {
+      return;
     }
-  };
+
+    api.on('select', () => {
+      setActiveIndex(api.selectedScrollSnap());
+    });
+  }, [api]);
 
   return (
     <section id='staff' className='bg-secondary/30 px-4 py-20'>
@@ -104,38 +85,40 @@ const TechnicalStaff = () => {
         </div>
 
         {/* Mobile/Tablet Carousel */}
-        <div className='relative md:hidden'>
-          <div
-            className='overflow-hidden'
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+        <div className='md:hidden'>
+          <Carousel
+            className='mx-auto w-full max-w-xs'
+            setApi={setApi}
+            opts={{ align: 'start', slidesToScroll: 1 }}
           >
-            <div
-              className='flex transition-transform duration-300 ease-in-out'
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
+            <CarouselContent className='-ml-2'>
               {staff.map(member => (
-                <div key={member.title} className='w-full flex-shrink-0 px-4'>
-                  <StaffCard imageSrc={member.image.src} title={member.title} />
-                </div>
+                <CarouselItem key={member.title} className='basis-4/6 pl-2'>
+                  <StaffCard
+                    imageSrc={member.image.src}
+                    title={member.title}
+                    className='group'
+                  />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className='hidden sm:flex'>
+              <CarouselPrevious className='absolute left-0 top-1/2 -translate-y-1/2' />
+              <CarouselNext className='absolute right-0 top-1/2 -translate-y-1/2' />
+            </div>
+            {/* Dots */}
+            <div className='mt-4 flex justify-center gap-2'>
+              {staff.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => api?.scrollTo(index)}
+                  className='h-2.5 w-2.5 rounded-full bg-border/50 transition-colors hover:bg-border data-[active]:bg-primary'
+                  data-active={index === activeIndex ? '' : undefined}
+                  aria-label={`Перейти до слайду ${index + 1}`}
+                />
               ))}
             </div>
-          </div>
-
-          {/* Carousel Controls - Dots Only */}
-          <div className='mt-8 flex justify-center space-x-2'>
-            {staff.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                aria-label={`Перейти до слайду ${index + 1}`}
-                className={`h-3 w-3 rounded-full transition-colors duration-200 ${
-                  index === currentSlide ? 'bg-primary' : 'bg-border'
-                }`}
-              />
-            ))}
-          </div>
+          </Carousel>
         </div>
       </div>
     </section>

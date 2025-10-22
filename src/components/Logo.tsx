@@ -9,7 +9,7 @@ interface Props {
   height?: number | string;
 }
 
-const basePath = ((import.meta.env.BASE as string) ?? '').replace(/\/$/, '');
+const basePath = (import.meta.env.BASE_URL ?? '').replace(/\/$/, '');
 const siteName = (import.meta.env.SITE_NAME as string) ?? 'Sound & Staff';
 
 export default function Logo({ className, alt, width, height }: Props) {

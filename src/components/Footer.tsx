@@ -6,17 +6,49 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const navigationLinks = [
-    { href: '#services', label: 'Послуги' },
-    { href: '#staff', label: 'Технічний персонал' },
-    { href: '#portfolio', label: 'Портфоліо' },
-    { href: '#contact', label: 'Контакти' },
+    { href: '#services', label: 'Послуги', isAnchor: true },
+    { href: '#staff', label: 'Технічний персонал', isAnchor: true },
+    { href: '#portfolio', label: 'Портфоліо', isAnchor: true },
+    {
+      href: `${import.meta.env.BASE_URL}/dj-alexey-galickiy`,
+      label: 'Dj Alexey Galickiy',
+      isAnchor: false,
+    },
+    { href: '#contact', label: 'Контакти', isAnchor: true },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (href: string, isAnchor: boolean) => {
+    if (isAnchor) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+  };
+
+  const renderNavigationItem = (item: {
+    href: string;
+    label: string;
+    isAnchor: boolean;
+  }) => {
+    if (item.isAnchor) {
+      return (
+        <button
+          onClick={() => handleNavigation(item.href, true)}
+          className='text-foreground/70 transition-colors duration-200 hover:text-primary'
+        >
+          {item.label}
+        </button>
+      );
+    }
+    return (
+      <a
+        href={item.href}
+        className='text-foreground/70 transition-colors duration-200 hover:text-primary'
+      >
+        {item.label}
+      </a>
+    );
   };
 
   return (
@@ -33,7 +65,7 @@ const Footer = () => {
               </p>
               <div className='flex gap-4'>
                 <a
-                  href='https://instagram.com/soundstaff.ua'
+                  href='https://instagram.com/sound_and_staff'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='glow-primary-hover rounded-lg bg-primary/10 p-2 text-primary transition-all duration-300 hover:bg-primary hover:text-white'
@@ -42,7 +74,7 @@ const Footer = () => {
                   <Instagram className='h-5 w-5' />
                 </a>
                 <a
-                  href='https://t.me/soundstaff_ua'
+                  href='https://t.me/Alexey_Galickiy'
                   target='_blank'
                   rel='noopener noreferrer'
                   className='glow-primary-hover rounded-lg bg-primary/10 p-2 text-primary transition-all duration-300 hover:bg-primary hover:text-white'
@@ -58,14 +90,7 @@ const Footer = () => {
               <h4 className='text-heading mb-4 font-semibold'>Навігація</h4>
               <ul className='space-y-2'>
                 {navigationLinks.map(link => (
-                  <li key={link.href}>
-                    <button
-                      onClick={() => scrollToSection(link.href)}
-                      className='text-foreground/70 transition-colors duration-200 hover:text-primary'
-                    >
-                      {link.label}
-                    </button>
-                  </li>
+                  <li key={link.href}>{renderNavigationItem(link)}</li>
                 ))}
               </ul>
             </div>
@@ -76,22 +101,20 @@ const Footer = () => {
               <ul className='space-y-2 text-foreground/70'>
                 <li>
                   <a
-                    href='tel:+380671234567'
+                    href='tel:+380687770727'
                     className='transition-colors hover:text-primary'
                   >
-                    +38 (067) 123-45-67
+                    +380 68 777 07 27
                   </a>
                 </li>
                 <li>
                   <a
-                    href='mailto:info@soundstaff.ua'
+                    href='mailto:contact@sound-staff.com.ua'
                     className='transition-colors hover:text-primary'
                   >
-                    info@soundstaff.ua
+                    contact@sound-staff.com.ua
                   </a>
                 </li>
-                <li>м. Київ, вул. Хрещатик, 1</li>
-                <li>Пн-Нд: 9:00 - 22:00</li>
               </ul>
             </div>
           </div>

@@ -22,6 +22,7 @@
   - **Конфигурация ESLint:** Должны быть включены и настроены плагины `eslint-plugin-react-hooks` (для отслеживания правильного использования хуков) и `eslint-plugin-jsx-a11y` (для обеспечения базовой доступности интерфейсов).
 
 ### 3.1. TypeScript
+
 - **Строгая типизация:** Проект должен использовать строгий режим TypeScript (`"strict": true` в `tsconfig.json`). Это включает `strictNullChecks`, `noImplicitAny` и другие важные проверки.
 - **Именование файлов:**
   - Файлы с React-компонентами: `PascalCase.tsx` (например, `DeliverySelector.tsx`).
@@ -43,10 +44,11 @@
 - **Явное определение типов:** Всегда явно указывайте типы для аргументов функций, возвращаемых значений и сложных переменных. Полагайтесь на вывод типов (type inference) только для простых и очевидных случаев.
 - **Utility Types:** Активно используйте встроенные утилиты для работы с типами: `Partial`, `Pick`, `Omit`, `Record` и др.
 - **Enums:** Для определения набора констант предпочитайте `union types` из строковых литералов. Они более легковесны и лучше интегрируются с кодом, чем `enum`.
+
   ```typescript
   // Отлично
   type Status = 'pending' | 'shipped' | 'delivered';
-
+  
   // Допустимо (если требуется объект со значениями)
   enum ShipmentStatus {
     Pending = 'pending',
@@ -55,6 +57,7 @@
   ```
 
 ### 3.2. React
+
 - **Функциональные компоненты и хуки:** Всегда используйте функциональные компоненты с хуками. Классовые компоненты считаются устаревшими.
 - **Именование:**
   - **Компоненты:** `PascalCase` (например, `function ShipmentTracker() { ... }`).
@@ -62,13 +65,15 @@
 - **Пропсы (Props):**
   - **Типизация:** Всегда типизируйте пропсы компонента с помощью TypeScript.
   - **Деструктуризация:** Деструктурируйте пропсы в начале компонента для ясности.
-    ```tsx
-    type UserProfileProps = { userId: number; };
 
+    ```tsx
+    type UserProfileProps = { userId: number };
+    
     function UserProfile({ userId }: UserProfileProps) {
       // ...
     }
     ```
+
 - **Состояние (State):**
   - **Клиентское состояние (Client State):**
     - **Локальное:** `useState` для простого состояния, `useReducer` для сложной логики внутри компонента.
@@ -79,7 +84,7 @@
       function UserProfile({ userId }: UserProfileProps) {
         const { data, isLoading, error } = useQuery({
           queryKey: ['user', userId],
-          queryFn: () => fetchUser(userId)
+          queryFn: () => fetchUser(userId),
         });
         // ...
       }

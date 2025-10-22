@@ -1,23 +1,23 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import Hero from '@/components/Sections/Hero.astro';
 import Services from '@/components/Services';
-import TechnicalStaff from '@/components/TechnicalStaff';
 import DJSection from '@/components/DJSection';
-import Events from '@/components/Events';
+import DJDescription from '@/components/DJDescription';
+import DJAdvantages from '@/components/DJAdvantages';
 import Contacts from '@/components/Contacts';
 ---
 
 <Layout title='Sound Staff'>
-  <Hero />
+  <DJSection client:load />
+  <DJDescription />
+  <DJAdvantages />
   <Services client:load />
-  <TechnicalStaff client:load />
-  <Events client:load />
   <Contacts
     client:load
     socialLinks={{
-      instagram: 'https://instagram.com/sound_and_staff',
+      instagram: 'https://instagram.com/alexey_galickiy',
       telegram: 'https://t.me/Alexey_Galickiy',
+      youtube: 'https://youtube.com/@galickiy-music',
     }}
   />
 </Layout>

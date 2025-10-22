@@ -3,10 +3,7 @@
     "autoAccept": false
   },
   "context": {
-    "fileName": [
-      ".gemini/COMBINED_CONTEXT.md",
-      "GEMINI.md"
-    ],
+    "fileName": [".gemini/COMBINED_CONTEXT.md", "GEMINI.md"],
     "fileFiltering": {
       "respectGitIgnore": true,
       "enableRecursiveFileSearch": true,
@@ -30,12 +27,7 @@
         "**/.idea/**"
       ]
     },
-    "includeDirectories": [
-      ".gemini/",
-      "docs/",
-      "dialog",
-      "."
-    ],
+    "includeDirectories": [".gemini/", "docs/", "dialog", "."],
     "loadFromIncludeDirectories": true
   },
   "model": {

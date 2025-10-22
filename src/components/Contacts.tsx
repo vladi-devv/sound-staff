@@ -1,4 +1,11 @@
-import { Check, ChevronDown, Instagram, Mail, Phone } from 'lucide-react';
+import {
+  Check,
+  ChevronDown,
+  Instagram,
+  Mail,
+  Phone,
+  Youtube,
+} from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -12,7 +19,15 @@ import {
 } from '@/components/ui/popover';
 import { Textarea } from '@/components/ui/textarea';
 
-const Contacts = () => {
+interface ContactsProps {
+  socialLinks?: {
+    instagram?: string;
+    telegram?: string;
+    youtube?: string;
+  };
+}
+
+const Contacts = ({ socialLinks }: ContactsProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -95,8 +110,8 @@ const Contacts = () => {
       <div className='container mx-auto'>
         {isSubmitted ? (
           <div className='rounded-lg border border-border bg-secondary p-8 text-center'>
-            <div className='bg-success/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full'>
-              <Check className='text-success h-8 w-8' />
+            <div className='mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-success/10'>
+              <Check className='h-8 w-8 text-success' />
             </div>
             <h3 className='mb-2 text-xl font-semibold text-foreground'>
               Дякуємо за вашу заявку!
@@ -262,10 +277,10 @@ const Contacts = () => {
                   <div>
                     <p className='font-medium text-foreground'>Телефон</p>
                     <a
-                      href='tel:+380991234567'
+                      href='tel:+380687770727'
                       className='text-muted-foreground transition-colors hover:text-primary'
                     >
-                      +380 99 123 45 67
+                      +380 68 777 07 27
                     </a>
                   </div>
                 </div>
@@ -277,10 +292,10 @@ const Contacts = () => {
                   <div>
                     <p className='font-medium text-foreground'>Email</p>
                     <a
-                      href='mailto:contact@soundandstaff.com.ua'
+                      href='mailto:contact@sound-staff.com.ua'
                       className='text-muted-foreground transition-colors hover:text-primary'
                     >
-                      contact@soundandstaff.com.ua
+                      contact@sound-staff.com.ua
                     </a>
                   </div>
                 </div>
@@ -290,31 +305,48 @@ const Contacts = () => {
                     Соціальні мережі
                   </p>
                   <div className='flex space-x-4'>
-                    <a
-                      href='https://instagram.com/soundandstaff'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='group flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors hover:bg-primary/20'
-                    >
-                      <Instagram
-                        className='h-6 w-6 text-primary transition-transform group-hover:scale-110'
-                        strokeWidth={1.5}
-                      />
-                    </a>
-                    <a
-                      href='https://t.me/soundandstaff'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='group flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors hover:bg-primary/20'
-                    >
-                      <svg
-                        className='h-6 w-6 text-primary transition-transform group-hover:scale-110'
-                        viewBox='0 0 24 24'
-                        fill='currentColor'
+                    {socialLinks?.instagram && (
+                      <a
+                        href={socialLinks.instagram}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='group flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors hover:bg-primary/20'
                       >
-                        <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-.14.06-.22.11l-3.08 1.95c-.44.29-.85.43-1.25.43-.82-.01-1.49-.46-2.2-.84-.87-.47-1.56-.72-1.5-1.51.03-.4.45-.8 1.25-1.21l4.87-2.04c2.34-.98 2.83-1.15 3.15-1.15.07 0 .22.02.32.12.08.08.1.19.11.27.01.06.02.2 0 .31z' />
-                      </svg>
-                    </a>
+                        <Instagram
+                          className='h-6 w-6 text-primary transition-transform group-hover:scale-110'
+                          strokeWidth={1.5}
+                        />
+                      </a>
+                    )}
+                    {socialLinks?.telegram && (
+                      <a
+                        href={socialLinks.telegram}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='group flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors hover:bg-primary/20'
+                      >
+                        <svg
+                          className='h-6 w-6 text-primary transition-transform group-hover:scale-110'
+                          viewBox='0 0 24 24'
+                          fill='currentColor'
+                        >
+                          <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-.14.06-.22.11l-3.08 1.95c-.44.29-.85.43-1.25.43-.82-.01-1.49-.46-2.2-.84-.87-.47-1.56-.72-1.5-1.51.03-.4.45-.8 1.25-1.21l4.87-2.04c2.34-.98 2.83-1.15 3.15-1.15.07 0 .22.02.32.12.08.08.1.19.11.27.01.06.02.2 0 .31z' />
+                        </svg>
+                      </a>
+                    )}
+                    {socialLinks?.youtube && (
+                      <a
+                        href={socialLinks.youtube}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='group flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 transition-colors hover:bg-primary/20'
+                      >
+                        <Youtube
+                          className='h-6 w-6 text-primary transition-transform group-hover:scale-110'
+                          strokeWidth={1.5}
+                        />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>

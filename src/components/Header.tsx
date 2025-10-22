@@ -4,32 +4,76 @@ import { useEffect, useState } from 'react';
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDjPage, setIsDjPage] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
+    setIsDjPage(window.location.pathname.includes('dj-alexey-galickiy'));
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navigationItems = [
-    { href: '#services', label: 'Послуги' },
-    { href: '#staff', label: 'Технічний персонал' },
-    { href: '#events', label: 'Події' },
-    { href: '#contacts', label: 'Контакти' },
-  ];
+  const navigationItems = isDjPage
+    ? [
+        { href: '#about-us', label: 'Про діджея', isAnchor: true },
+        { href: '#services', label: 'Послуги', isAnchor: true },
+        { href: '#contacts', label: 'Контакти', isAnchor: true },
+      ]
+    : [
+        { href: '#services', label: 'Послуги', isAnchor: true },
+        { href: '#staff', label: 'Технічний персонал', isAnchor: true },
+        { href: '#events', label: 'Події', isAnchor: true },
+        {
+          href: `${basePath}/dj-alexey-galickiy`,
+          label: 'Dj Alexey Galickiy',
+          isAnchor: false,
+        },
+        { href: '#contacts', label: 'Контакти', isAnchor: true },
+      ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (href: string, isAnchor: boolean) => {
+    if (isAnchor) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     setIsMenuOpen(false);
+  };
+
+  const renderNavigationItem = (item: {
+    href: string;
+    label: string;
+    isAnchor: boolean;
+  }) => {
+    if (item.isAnchor) {
+      return (
+        <button
+          onClick={() => handleNavigation(item.href, true)}
+          className='font-medium text-foreground transition-colors duration-200 hover:text-primary'
+        >
+          {item.label}
+        </button>
+      );
+    }
+    return (
+      <a
+        href={item.href}
+        className='font-medium text-foreground transition-colors duration-200 hover:text-primary'
+        onClick={() => setIsMenuOpen(false)}
+      >
+        {item.label}
+      </a>
+    );
   };
 
   return (
@@ -40,7 +84,6 @@ const Header = () => {
     >
       <div className='container mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex h-16 items-center justify-between'>
-          {/* Logo */}
           <div className='flex-shrink-0'>
             <Logo />
           </div>
@@ -48,16 +91,10 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className='hidden items-center space-x-8 md:flex'>
             {navigationItems.map(item => (
-              <button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className='font-medium text-foreground transition-colors duration-200 hover:text-primary'
-              >
-                {item.label}
-              </button>
+              <div key={item.href}>{renderNavigationItem(item)}</div>
             ))}
             <Button
-              onClick={() => scrollToSection('#contact')}
+              onClick={() => handleNavigation('#contacts', true)}
               className='btn-primary glow-primary-hover'
             >
               Обговорити
@@ -68,7 +105,7 @@ const Header = () => {
           <div className='flex items-center space-x-4 md:hidden'>
             <Button
               size='sm'
-              onClick={() => scrollToSection('#contacts')}
+              onClick={() => handleNavigation('#contacts', true)}
               className='btn-primary'
             >
               Обговорити
@@ -99,19 +136,15 @@ const Header = () => {
           </div>
           <nav className='flex flex-1 flex-col justify-center space-y-8'>
             {navigationItems.map(item => (
-              <button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className='block text-left text-3xl font-medium text-foreground transition-colors duration-200 hover:text-primary'
-              >
-                {item.label}
-              </button>
+              <div key={item.href} className='block text-left text-3xl'>
+                {renderNavigationItem(item)}
+              </div>
             ))}
           </nav>
           <div className='pb-4'>
             <Button
               size='lg'
-              onClick={() => scrollToSection('#contacts')}
+              onClick={() => handleNavigation('#contacts', true)}
               className='btn-primary glow-primary-hover w-full'
             >
               <Phone className='mr-2 h-5 w-5' />
